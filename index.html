@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Bookmarks</title>
+    </head>
+
+    <body style="background: black; color: white">
+        <div id="bookmarks"/>
+
+        <script>
+            const bookmark_dict = {};
+            const url = window.location.href;
+            const query_start = url.indexOf('?');
+    
+            if (query_start >= 0) {
+                const query = url.substring(query_start + 1).split('&');
+                const keyset = '0123456789abcdefghijklmnopqrstuvqxyz';
+		const bookmarks = document.getElementById('bookmarks');
+    
+                for (let i = 0; i < query.length && i < keyset.length; ++i) {
+                    const pair = query[i].split('=');
+                    
+                    if (pair.length === 2) {
+			const [name, url] = pair;
+			const key = keyset[i];
+			bookmark_dict[key] = url;
+
+			const key_node = document.createTextNode(`${key}: `);
+			const url_node = document.createElement('a');
+			url_node.href = decodeURI(url);
+			url_node.text = decodeURI(name);
+
+			const new_div = document.createElement('div');
+		        new_div.appendChild(key_node);
+			new_div.appendChild(url_node);
+
+			bookmarks.appendChild(new_div);
+
+		    }
+                }
+            }
+    
+    
+            function go_to_bookmark(e){
+                const evtobj  = window.event ? event : e;
+                const unicode = evtobj.charCode ? evtobj.charCode : evtobj.keyCode;
+                const chr     = String.fromCharCode(unicode);
+    
+                if (bookmark_dict[chr]) {
+                    window.location.href = bookmark_dict[chr];
+                }
+            }
+    
+            document.onkeypress = go_to_bookmark;
+        </script>
+    </body>
+</html>
