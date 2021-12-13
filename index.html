@@ -26,7 +26,7 @@
 
                         const key_node = document.createTextNode(`${key}: `);
                         const url_node = document.createElement('a');
-                        url_node.href = decodeURI(url);
+                        url_node.href = url;
                         url_node.text = decodeURI(name);
 
                         const new_div = document.createElement('div');
