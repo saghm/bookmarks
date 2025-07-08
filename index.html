@@ -26,6 +26,7 @@
 
                         const key_node = document.createTextNode(`${key}: `);
                         const url_node = document.createElement('a');
+
                         url_node.href = url;
                         url_node.text = decodeURI(name);
 
@@ -44,7 +45,7 @@
                 const chr     = String.fromCharCode(unicode);
     
                 if (bookmark_dict[chr]) {
-                    window.location.href = bookmark_dict[chr];
+                    window.location.href = decodeURIComponent(bookmark_dict[chr]);
                 }
             }
 
